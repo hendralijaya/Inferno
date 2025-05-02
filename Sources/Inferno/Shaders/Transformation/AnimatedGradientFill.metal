@@ -27,10 +27,13 @@ using namespace metal;
     // Get the same UV in the range -1 to 1, so that
     // 0 is in the center.
     half2 rp = uv * 2.0h - 1.0h;
+    
+    // Wrap the time value to prevent it from becoming too large
+     float wrappedTime = fmod(time, 2.0 * 3.1415927);
 
     // Calculate the angle top this pixel, adding in time
     // so it's constantly changing.
-    half angle = atan2(rp.y, rp.x) + time;
+    half angle = atan2(rp.y, rp.x) + wrappedTime;
 
     // Send back variations on the sine of that angle, so we
     // get a range of colors. The use of abs() here avoids
